@@ -12,6 +12,11 @@ var Proxy = function Constructor(ws) {
 	this._from = ws.upgradeReq.connection.remoteAddress;
 	this._to   = ws.upgradeReq.url.substr(1);
 	this._ws   = ws;
+	
+	const params = this._to.split("?server=");
+	if (params.length == 2) {
+		this._to = params[1];
+	}
 
 	// Bind data
 	this._ws.on('message', this.clientData.bind(this) );
